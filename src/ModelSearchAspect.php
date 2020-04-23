@@ -113,7 +113,6 @@ class ModelSearchAspect extends SearchAspect
     protected function addSearchConditions(Builder $query, string $term)
     {
         $attributes = $this->attributes;
-        //$searchTerms = explode(' ', $term);
         $searchTerms[0] = $term;
 
         $query->where(function (Builder $query) use ($attributes, $term, $searchTerms) {
