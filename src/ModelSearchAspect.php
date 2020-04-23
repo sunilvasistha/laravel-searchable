@@ -113,7 +113,8 @@ class ModelSearchAspect extends SearchAspect
     protected function addSearchConditions(Builder $query, string $term)
     {
         $attributes = $this->attributes;
-        $searchTerms = explode(' ', $term);
+        //$searchTerms = explode(' ', $term);
+        $searchTerms[0] = $term;
 
         $query->where(function (Builder $query) use ($attributes, $term, $searchTerms) {
             foreach (Arr::wrap($attributes) as $attribute) {
@@ -122,7 +123,7 @@ class ModelSearchAspect extends SearchAspect
                     $searchTerm = mb_strtolower($searchTerm, 'UTF8');
 
                     $attribute->isPartial()
-                        ? $query->orWhereRaw($sql, ["%{$searchTerm}%"])
+                        ? $query->orWhereRaw($sql, ["{$searchTerm}%"])
                         : $query->orWhere($attribute->getAttribute(), $searchTerm);
                 }
             }
